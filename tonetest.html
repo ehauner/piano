@@ -1,0 +1,140 @@
+<html>
+  <head>
+    <style>
+      .board {
+        display: table;
+      }
+      .whites {
+        display: table-row;
+      }
+      .whites .key {
+        display: table-cell;
+        height: 500px;
+        width: 80px;
+        border-width: 2px 1px 2px 1px;
+        border-style: solid;
+        border-color: black;
+        cursor: pointer;
+      }
+      .key.active {
+        background-color: lightgrey;
+      }
+    </style>
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/0.10.0/Tone.min.js" charset="utf-8"></script>
+  <script>
+
+    $(() => {
+        //create a synth and connect it to the master output (your speakers)
+        var synth = new Tone.PolySynth(6, Tone.Synth, {
+                			"oscillator" : {
+                				"partials" : [0, 2, 3, 4],
+                			}
+                		}).toMaster();
+
+        $(window).a(function(e) {
+          var key = e.key;
+          var keyCode = e.keyCode;
+          handleKey(synth, key, keyCode);
+        });
+
+        $(window).keyup(function(e) {
+          clearKey();
+        });
+
+        $('.key').mousedown((e) => {
+          var key = e.target.classList[e.target.classList.length - 1];
+          console.log(key);
+          handleKey(synth, key, 0);
+        })
+
+        $('.key').mouseup((e) => {
+          clearKey();
+        })
+      });
+
+    function handleKey(synth, key, keyCodea) {
+      // alert(keyCode);
+      if (key == 'w') {
+        synth.triggerAttackRelease("C4", "8n");
+        $('#note').html($('#note').html() + 'C4 ');
+        $('.key.c').addClass('active');
+      } else if (key == 'a') {
+        synth.triggerAttackRelease("C#4", "8n");
+        $('#note').html($('#note').html() + 'C#4 ');
+      } else if (key == 's') {
+        synth.triggerAttackRelease("D4", "8n");
+        $('#note').html($('#note').html() + 'D4 ');
+        $('.key.d').addClass('active');
+      } else if (key == 'd') {
+        synth.triggerAttackRelease("D#4", "8n");
+        $('#note').html($('#note').html() + 'D#4 ');
+      } else if (key == 'f') {
+        synth.triggerAttackRelease("E4", "8n");
+        $('#note').html($('#note').html() + 'E4 ');
+        $('.key.e').addClass('active');
+      } else if (key == 'g') {
+        synth.triggerAttackRelease("F4", "8n");
+        $('#note').html($('#note').html() + 'F4 ');
+        $('.key.f').addClass('active');
+      } else if (key == 't') {
+        synth.triggerAttackRelease("F#4", "8n");
+        $('#note').html($('#note').html() + 'F#4 ');
+      } else if (key == 'g') {
+        synth.triggerAttackRelease("G4", "8n");
+        $('#note').html($('#note').html() + 'G4 ');
+        $('.key.g').addClass('active');
+      } else if (key == 'y') {
+        synth.triggerAttackRelease("G#4", "8n");
+        $('#note').html($('#note').html() + 'G#4 ');
+      } else if (key == 'h') {
+        synth.triggerAttackRelease("A4", "8n");
+        $('#note').html($('#note').html() + 'A4 ');
+        $('.key.a').addClass('active');
+      } else if (key == 'u') {
+        synth.triggerAttackRelease("A#4", "8n");
+        $('#note').html($('#note').html() + 'A#4 ');
+      } else if (key == 'j') {
+        synth.triggerAttackRelease("B4", "8n");
+        $('#note').html($('#note').html() + 'B4 ');
+        $('.key.b').addClass('active');
+      }
+    };
+
+    function clearKey() {
+      $('#note').html('');
+      $('.active').removeClass('active');
+    }
+  </script>
+
+  <body>
+
+    <div class="board">
+      <div class="blacks">
+        <div class="key cs"></div>
+        <div class="key ds"></div>
+        <div class="key blank"></div>
+        <div class="key fs"></div>
+        <div class="key gs"></div>
+        <div class="key as"></div>
+        <div class="key blank"></div>
+      </div>
+      <div class="whites">
+        <div class="key c"></div>
+        <div class="key d"></div>
+        <div class="key e"></div>
+        <div class="key f"></div>
+        <div class="key g"></div>
+        <div class="key a"></div>
+        <div class="key b"></div>
+      </div>
+    </div>
+
+    <p>
+      <span>Note: </span>
+      <div id="note"></div>
+    </p>
+
+  </body>
+</html>
